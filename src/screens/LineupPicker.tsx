@@ -1,91 +1,102 @@
 import { useEffect, useState } from 'react'
 
 export default function LineupPicker({
-    awayTeamId, 
-    homeTeamId,
-    setAwayTeamLineup,
-    setHomeTeamLineup,
-    homeTeamLineup, 
-    awayTeamLineup, 
-    gameId = 1,
+  awayTeamId,
+  homeTeamId,
+  setAwayTeamLineup,
+  setHomeTeamLineup,
+  homeTeamLineup,
+  awayTeamLineup,
+  gameId = 1,
 }: {
-    awayTeamId: number, 
-    homeTeamId: number, 
-    homeTeamLineup: any[], 
-    awayTeamLineup: any[]
-    setAwayTeamLineup: (players: any[]) => void,  
-    setHomeTeamLineup: (players: any[]) => void,  
-    gameId: number
+  awayTeamId: number
+  homeTeamId: number
+  homeTeamLineup: unknown[]
+  awayTeamLineup: unknown[]
+  setAwayTeamLineup: (players: unknown) => void
+  setHomeTeamLineup: (players: unknown) => void
+  gameId: number
 }) {
-    const [hasSent, setHasSent] = useState(false)
+  const [hasSent, setHasSent] = useState(false)
 
-    const getPlayers = async (type: 'away' | 'home') => {
-        let response = type === 'away' 
-            ? await fetch(`http://localhost:5000/players/${awayTeamId}`)
-            : await fetch(`http://localhost:5000/players/${homeTeamId}`)
+  const getPlayers = async (type: 'away' | 'home') => {
+    const response =
+      type === 'away'
+        ? await fetch(`http://localhost:5000/players/${awayTeamId}`)
+        : await fetch(`http://localhost:5000/players/${homeTeamId}`)
 
-        const json = await response.json()
+    const json = await response.json()
 
-        if (type === 'away') {
+    if (type === 'away') {
+      const awayArr = []
+      for (let i = 0; i < 9; i++) {
+        awayArr.push(json[i])
+      }
 
-            const awayArr = []
-            for (let i = 0; i < 9; i++) {
-                awayArr.push(json[i])
-            }
+      setAwayTeamLineup(awayArr)
+    } else {
+      setHomeTeamLineup(json)
 
-            setAwayTeamLineup(awayArr)
-        } else {
-            setHomeTeamLineup(json)
+      const homeArr = []
+      for (let i = 0; i < 9; i++) {
+        homeArr.push(json[i])
+      }
 
-            const homeArr = []
-            for (let i = 0; i < 9; i++) {
-                homeArr.push(json[i])
-            }
+      setHomeTeamLineup(homeArr)
+    }
+  }
 
-            setHomeTeamLineup(homeArr)
-        }
+  const postLineups = async () => {
+    const payload = JSON.stringify({
+      away: awayTeamLineup,
+      home: homeTeamLineup,
+    })
+
+    const response = await fetch(`http://localhost:5000/lineups/${gameId}`, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // "Access-Control-Allow-Origin": "*"
+      },
+      body: payload,
+    })
+
+    const json = await response.json()
+    console.log(json)
+  }
+
+  useEffect(() => {
+    getPlayers('away')
+    getPlayers('home')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (!homeTeamLineup || !awayTeamLineup || hasSent) {
+      return
     }
 
-    const postLineups = async () => {
-        const payload = JSON.stringify({
-            away: awayTeamLineup, 
-            home: homeTeamLineup
-        })
+    postLineups()
+    setHasSent(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [homeTeamLineup, awayTeamLineup])
 
-        const response = await fetch(`http://localhost:5000/lineups/${gameId}`, {
-            method: 'POST', 
-            mode: "no-cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept":'application/json', 
-                // "Access-Control-Allow-Origin": "*"
-            },
-            body: payload
-        })
-
-        console.log('response', response)
-
-        const json = await response.json() 
-        console.log(json)
-    }
-
-    useEffect(() => {
-        getPlayers('away') 
-        getPlayers('home')
-    }, [])
-
-    useEffect(() => {
-        if (!homeTeamLineup || !awayTeamLineup || hasSent) {
-            return
-        }
-
-        postLineups()
-        setHasSent(true)
-    }, [homeTeamLineup, awayTeamLineup])
-
-    return (
-        <>
-            players here
-        </>
-    )
+  return (
+    <div style={{ display: 'flex' }}>
+      <div style={{ marginRight: 30 }}>
+        Home Team
+        {homeTeamLineup.map((player: any) => {
+          return <div>{player.name}</div>
+        })}
+      </div>
+      <div>
+        Away Team
+        {awayTeamLineup.map((player: any) => {
+          return <div>{player.name}</div>
+        })}
+      </div>
+    </div>
+  )
 }
