@@ -54,11 +54,28 @@ export default function LineupPicker({
 
     const response = await fetch(`http://localhost:5000/lineups/${gameId}`, {
       method: 'POST',
-      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        // "Access-Control-Allow-Origin": "*"
+      },
+      body: payload,
+    })
+
+    const json = await response.json()
+    console.log(json)
+  }
+
+  const createGame = async () => {
+    const payload = JSON.stringify({
+      away: awayTeamLineup,
+      home: homeTeamLineup,
+    })
+
+    const response = await fetch(`http://localhost:5000/game/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: payload,
     })
@@ -78,25 +95,38 @@ export default function LineupPicker({
       return
     }
 
-    postLineups()
     setHasSent(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [homeTeamLineup, awayTeamLineup])
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ marginRight: 30 }}>
-        Home Team
-        {homeTeamLineup.map((player: any) => {
-          return <div>{player.name}</div>
-        })}
+    <>
+      <div style={{ display: 'flex' }}>
+        <div style={{ marginRight: 30 }}>
+          Home Team
+          {homeTeamLineup.map((player: any) => {
+            return <div key={player.name}>{player.name}</div>
+          })}
+        </div>
+        <div>
+          Away Team
+          {awayTeamLineup.map((player: any) => {
+            return <div key={player.name}>{player.name}</div>
+          })}
+        </div>
       </div>
-      <div>
-        Away Team
-        {awayTeamLineup.map((player: any) => {
-          return <div>{player.name}</div>
-        })}
-      </div>
-    </div>
+
+      {!!homeTeamLineup && !!awayTeamLineup && (
+        <div
+          style={{ marginTop: 20, cursor: 'pointer' }}
+          onClick={() => {
+            postLineups()
+            createGame()
+          }}
+        >
+          Start Game
+        </div>
+      )}
+    </>
   )
 }

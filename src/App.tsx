@@ -3,10 +3,11 @@ import './App.css'
 import TeamPicker from './screens/TeamPicker'
 import { Team } from './types/Team'
 import LineupPicker from './screens/LineupPicker'
-import StartGameButton from './components/StartGameButton'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import GameListPage from './screens/GameListPage'
+import GamePage from './screens/GamePage'
 
 const queryClient = new QueryClient()
 
@@ -47,24 +48,11 @@ function App() {
                 />
               }
             />
+
+            <Route path="/games" element={<GameListPage />} />
+            <Route path="/game/:gameId" element={<GamePage />} />
           </Routes>
         </Router>
-        {/* {areTeamsSelected && (
-          <div>
-            Away team: {awayTeam.name}
-            Home team: {homeTeam.name}
-          </div>
-        )}
-
-        {areTeamsSelected && (
-          <>
-            
-          </>
-        )} */}
-
-        {/* {areTeamsSelected && areLineupsFinished && (
-          <StartGameButton />
-        )}   */}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>

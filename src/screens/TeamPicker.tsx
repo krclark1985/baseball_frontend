@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface Team {
   id: number
@@ -13,6 +13,7 @@ export default function TeamPicker({
   setAwayTeam,
   setHomeTeam,
 }: any) {
+  const navigate = useNavigate()
   const [allTeams, setAllTeams] = useState([])
 
   const getTeams = async () => {
@@ -25,11 +26,12 @@ export default function TeamPicker({
     getTeams()
   }, [])
 
-  // useEffect(() => {
-  // 	if (!!awayTeam && !!homeTeam) {
-  // 		redirect('/lineups')
-  // 	}
-  // }, [awayTeam, homeTeam])
+  useEffect(() => {
+    if (!!awayTeam && !!homeTeam) {
+      navigate('/lineups')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [awayTeam, homeTeam])
 
   return (
     <>
@@ -53,7 +55,9 @@ export default function TeamPicker({
                 cursor: 'pointer',
                 backgroundColor: 'green',
                 padding: 12,
+                color: 'white',
                 margin: 10,
+                fontWeight: 'bold',
               }}
             >
               {team.name}
