@@ -1,5 +1,10 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import axios from 'axios'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import LoadingScreen from '../components/LoadingScreen'
+import { useState } from 'react'
 
 interface Team {
   id: number
@@ -7,31 +12,72 @@ interface Team {
   mlb_id: number
 }
 
-export default function TeamPicker({
-  awayTeam,
-  homeTeam,
-  setAwayTeam,
-  setHomeTeam,
-}: any) {
+export default function TeamPicker() {
   const navigate = useNavigate()
-  const [allTeams, setAllTeams] = useState([])
+  const params = useParams()
+  const [awayTeam, setAwayTeam] = useState<Team | null>(null)
+  const [homeTeam, setHomeTeam] = useState<Team | null>(null)
 
   const getTeams = async () => {
-    const response = await fetch('http://localhost:5000/teams')
-    const json = await response.json()
-    setAllTeams(json)
+    const response = await axios.get('http://localhost:5000/teams')
+    const json = await response.data
+
+    return json
   }
 
-  useEffect(() => {
-    getTeams()
-  }, [])
+  const teamsQuery = useQuery({
+    queryKey: ['teams'],
+    queryFn: getTeams,
+  })
 
-  useEffect(() => {
-    if (!!awayTeam && !!homeTeam) {
-      navigate('/lineups')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [awayTeam, homeTeam])
+  if (!teamsQuery.data) {
+    return <LoadingScreen />
+  }
+
+  const allTeams = teamsQuery.data
+
+  if (awayTeam && homeTeam) {
+    return (
+      <Box>
+        Please confirm these are the teams you want
+        <Typography>away team - {awayTeam.name}</Typography>
+        <Typography>home team - {homeTeam.name}</Typography>
+        <Box>
+          <button
+            style={{ cursor: 'pointer' }}
+            onClick={async () => {
+              const response = await axios.put(
+                `http://localhost:5000/game/${params.gameId}/team_info`,
+                {
+                  team1_id: awayTeam.id,
+                  team1_name: awayTeam.name,
+                  team2_id: homeTeam.id,
+                  team2_name: homeTeam.name,
+                }
+              )
+
+              if (response.status === 200) {
+                navigate(`/game/${params.gameId}/lineups/randomzie`)
+              }
+            }}
+          >
+            confirm
+          </button>
+        </Box>
+        <Box>
+          <button
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              setAwayTeam(null)
+              setHomeTeam(null)
+            }}
+          >
+            reset
+          </button>
+        </Box>
+      </Box>
+    )
+  }
 
   return (
     <>
@@ -46,9 +92,11 @@ export default function TeamPicker({
               onClick={() => {
                 if (!awayTeam) {
                   setAwayTeam(team)
-                } else {
-                  setHomeTeam(team)
+
+                  return
                 }
+
+                setHomeTeam(team)
               }}
               key={team.mlb_id}
               style={{
@@ -56,6 +104,9 @@ export default function TeamPicker({
                 backgroundColor: 'green',
                 padding: 12,
                 color: 'white',
+                textAlign: 'center',
+                maxWidth: 300,
+                borderRadius: 12,
                 margin: 10,
                 fontWeight: 'bold',
               }}

@@ -63,9 +63,9 @@ export default function GamePage() {
     retry: 1,
   })
 
-  console.log(inningQuery.data)
+  console.log('inning', inningQuery.data)
   // console.log(outcomeQuery.data)
-  console.log(outsQuery.data)
+  console.log('outs', outsQuery.data)
 
   return (
     <>
