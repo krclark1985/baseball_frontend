@@ -48,14 +48,6 @@ export default function LineupGenerator() {
     refetchOnWindowFocus: false,
   })
 
-  // const getRandomTeam = async () => {
-  //   const response = await axios.get(`http://localhost:5000`)
-  // }
-
-  // const team1Random = useQuery({
-  //   queryKey:
-  // })
-
   if (
     !teamInfoQuery.data ||
     !randomTeamPlayers1Query.data ||
@@ -73,13 +65,13 @@ export default function LineupGenerator() {
         <Box>
           Away team lineup
           {awayTeam.map((player) => (
-            <div> {player.name} </div>
+            <div key={player.id}> {player.name} </div>
           ))}
         </Box>
         <Box ml={4}>
           Home team lineup
           {homeTeam.map((player) => (
-            <div> {player.name} </div>
+            <div key={player.id}> {player.name} </div>
           ))}
         </Box>
       </Box>

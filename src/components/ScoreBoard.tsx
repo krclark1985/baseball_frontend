@@ -41,11 +41,22 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
     return <div />
   }
 
+  console.log('tteamsInfoQuery', teamsInfoQuery.data)
+
   const { team1_name, team2_name } = teamsInfoQuery.data
   const { team1_runs: homeScore, team2_runs: awayScore } = runsQuery.data
 
   const homeName = team1_name as keyof typeof TeamColors
   const awayName = team2_name as keyof typeof TeamColors
+
+  const homeColorInfo = TeamColors[homeName] || {
+    color: 'white',
+    bgColor: 'blue',
+  }
+  const awayColorInfo = TeamColors[awayName] || {
+    color: 'white',
+    bgColor: 'blue',
+  }
 
   return (
     <Box
@@ -58,8 +69,8 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
     >
       <Box
         display="flex"
-        color={TeamColors[homeName].color}
-        bgcolor={TeamColors[homeName].bgColor}
+        color={homeColorInfo.color}
+        bgcolor={homeColorInfo.bgColor}
         justifyContent="space-between"
         alignItems="center"
       >
@@ -76,8 +87,8 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
       <Box
         display="flex"
         width="100%"
-        color={TeamColors[awayName].color}
-        bgcolor={TeamColors[awayName].bgColor}
+        color={awayColorInfo.color}
+        bgcolor={awayColorInfo.bgColor}
         justifyContent="space-between"
         alignItems="center"
       >

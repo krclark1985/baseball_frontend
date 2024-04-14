@@ -40,6 +40,10 @@ export default function BatterInformation({ gameId }: BatterInformationProps) {
       <Typography>
         {player.name} - {player.primary_position}
       </Typography>
+      <div>Now Batting -</div>
+      <img
+        src={`https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${player.mlb_stats_id}/headshot/67/current`}
+      />
     </Box>
   )
 }

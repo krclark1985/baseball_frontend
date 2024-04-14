@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route
               path="/" // TODO: Show screen that decides if a player wants to start a new game.
-              element={<>weeeee</>}
+              element={<GameListPage />}
             />
 
             <Route path="/game-create" element={<GameCreator />} />
@@ -30,7 +30,6 @@ function App() {
               element={<LineupGenerator />}
             />
 
-            <Route path="/games" element={<GameListPage />} />
             <Route path="/game/:gameId" element={<GamePage />} />
           </Routes>
         </Router>
