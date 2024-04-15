@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import ScoreBoard from '../components/ScoreBoard'
 import BatterInformation from '../components/BatterInformation'
+import Bases from '../components/Bases'
 
 export default function GamePage() {
   const { gameId } = useParams()
+  const queryClient = useQueryClient()
 
   const getInning = async () => {
     const response = await axios.get(
@@ -15,25 +17,9 @@ export default function GamePage() {
     return response.data
   }
 
-  // const getOutcome = async () => {
-  //   const response = await axios.get(
-  //     `http://localhost:5000/game/${gameId}/pitch/${1}`
-  //   )
-
-  //   return response.data
-  // }
-
   const getOuts = async () => {
     const response = await axios.get(
       `http://localhost:5000/game/${gameId}/outs`
-    )
-
-    return response.data
-  }
-
-  const getRunners = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/runners`
     )
 
     return response.data
@@ -45,38 +31,38 @@ export default function GamePage() {
     retry: 1,
   })
 
-  // const outcomeQuery = useQuery({
-  //   queryKey: ['outcome'],
-  //   queryFn: getOutcome,
-  //   retry: 1,
-  // })
-
   const outsQuery = useQuery({
     queryKey: ['outs'],
     queryFn: getOuts,
     retry: 1,
   })
 
-  const runnersQuery = useQuery({
-    queryKey: ['runners'],
-    queryFn: getRunners,
-    retry: 1,
-  })
-
   console.log('inning', inningQuery.data)
-  // console.log(outcomeQuery.data)
   console.log('outs', outsQuery.data)
 
   return (
     <>
-      <ScoreBoard gameId={gameId as any} />
-      <BatterInformation gameId={gameId as any} />
+      <ScoreBoard gameId={Number(gameId) as any} />
+      <BatterInformation gameId={Number(gameId) as any} />
+      <Bases gameId={Number(gameId) as number} />
 
       <div>inning: {inningQuery.data}</div>
       <div>outs: {outsQuery.data}</div>
       {/* <div>outcome: {outcomeQuery.data}</div> */}
 
-      {/* {gameId} */}
+      <button
+        onClick={() => {
+          axios.get(`http://localhost:5000/game/${gameId}/pitch/${1}`)
+
+          queryClient.invalidateQueries({ queryKey: ['batter'] })
+          queryClient.invalidateQueries({ queryKey: ['outs'] })
+          queryClient.invalidateQueries({ queryKey: ['runners'] })
+          queryClient.invalidateQueries({ queryKey: ['inning'] })
+          queryClient.invalidateQueries({ queryKey: ['runs'] })
+        }}
+      >
+        take swing
+      </button>
     </>
   )
 }

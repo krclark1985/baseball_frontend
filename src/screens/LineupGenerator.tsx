@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
 import Box from '@mui/material/Box'
 import { Player } from '../types/Player'
@@ -8,6 +8,7 @@ import { Player } from '../types/Player'
 export default function LineupGenerator() {
   const params = useParams()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const getTeamInfo = async () => {
     const response = await axios.get(
@@ -48,6 +49,12 @@ export default function LineupGenerator() {
     refetchOnWindowFocus: false,
   })
 
+  console.log(
+    teamInfoQuery.data,
+    randomTeamPlayers1Query.data,
+    randomTeamPlayers2Query.data
+  )
+
   if (
     !teamInfoQuery.data ||
     !randomTeamPlayers1Query.data ||
@@ -87,9 +94,9 @@ export default function LineupGenerator() {
             }
           )
 
-          const json = await response.data
+          const json = await response.data // TOOD: CHeck json response
 
-          console.log('JSON: ', json)
+          navigate(`/game/${params.gameId}`)
         }}
       >
         confirm

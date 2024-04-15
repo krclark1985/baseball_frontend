@@ -2,11 +2,11 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import GameListPage from './screens/GameListPage'
 import GamePage from './screens/GamePage'
 import GameCreator from './screens/GameCreator'
 import TeamPicker from './screens/TeamPicker'
 import LineupGenerator from './screens/LineupGenerator'
+import HomePage from './screens/HomePage'
 
 const queryClient = new QueryClient()
 
@@ -16,10 +16,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Routes>
-            <Route
-              path="/" // TODO: Show screen that decides if a player wants to start a new game.
-              element={<GameListPage />}
-            />
+            <Route path="/" element={<HomePage />} />
 
             <Route path="/game-create" element={<GameCreator />} />
 

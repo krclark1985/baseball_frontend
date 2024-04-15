@@ -1,7 +1,3 @@
-// https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/694297/headshot/67/current
-
-// v1/people/:playerId/headshot
-
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { Player } from '../types/Player'
@@ -27,8 +23,6 @@ export default function BatterInformation({ gameId }: BatterInformationProps) {
     retry: 1,
   })
 
-  console.log('currentBatterQuery.data', currentBatterQuery.data)
-
   if (!currentBatterQuery.data) {
     return <div />
   }
@@ -36,14 +30,33 @@ export default function BatterInformation({ gameId }: BatterInformationProps) {
   const player = currentBatterQuery.data as Player
 
   return (
-    <Box>
-      <Typography>
-        {player.name} - {player.primary_position}
-      </Typography>
-      <div>Now Batting -</div>
-      <img
-        src={`https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${player.mlb_stats_id}/headshot/67/current`}
-      />
+    <Box ml={5} mt={3}>
+      <Typography fontSize={24}>Current Batter</Typography>
+      <Box
+        p={3}
+        bgcolor="black"
+        maxWidth={600}
+        display="flex"
+        justifyContent="space-between"
+      >
+        <Box>
+          <Typography color="white" fontSize={24}>
+            {player.name} - {player.primary_position}
+          </Typography>
+          <Typography color="white" fontSize={24}>
+            Avg - {player.average}
+          </Typography>
+          <Typography color="white" fontSize={24}>
+            Homeruns - {player.homers}
+          </Typography>
+          <Typography color="white" fontSize={24}>
+            RBI - {player.rbi}
+          </Typography>
+        </Box>
+        <img
+          src={`https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${player.mlb_stats_id}/headshot/67/current`}
+        />
+      </Box>
     </Box>
   )
 }

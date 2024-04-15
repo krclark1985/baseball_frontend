@@ -56,6 +56,15 @@ export default function TeamPicker() {
                 }
               )
 
+              console.log({
+                team1_id: awayTeam.id,
+                team1_name: awayTeam.name,
+                team2_id: homeTeam.id,
+                team2_name: homeTeam.name,
+              })
+
+              console.log(response)
+
               if (response.status === 200) {
                 navigate(`/game/${params.gameId}/lineups/randomzie`)
               }
@@ -66,7 +75,7 @@ export default function TeamPicker() {
         </Box>
         <Box>
           <button
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', marginTop: 16 }}
             onClick={() => {
               setAwayTeam(null)
               setHomeTeam(null)
