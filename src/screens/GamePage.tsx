@@ -25,6 +25,14 @@ export default function GamePage() {
     return response.data
   }
 
+  const getHitOutcome = async () => {
+    const response = await axios.get(
+      `http://localhost:5000/game/${gameId}/hit_outcome`
+    )
+
+    return response.data
+  }
+
   const inningQuery = useQuery({
     queryKey: ['inning'],
     queryFn: getInning,
@@ -35,6 +43,11 @@ export default function GamePage() {
     queryKey: ['outs'],
     queryFn: getOuts,
     retry: 1,
+  })
+
+  const hitOutcomeQuery = useQuery({
+    queryKey: ['hit_outcome'],
+    queryFn: getHitOutcome,
   })
 
   console.log('inning', inningQuery.data)
@@ -48,7 +61,7 @@ export default function GamePage() {
 
       <div>inning: {inningQuery.data}</div>
       <div>outs: {outsQuery.data}</div>
-      {/* <div>outcome: {outcomeQuery.data}</div> */}
+      <div>hit outcome: {hitOutcomeQuery.data}</div>
 
       <button
         onClick={() => {
@@ -59,6 +72,7 @@ export default function GamePage() {
           queryClient.invalidateQueries({ queryKey: ['runners'] })
           queryClient.invalidateQueries({ queryKey: ['inning'] })
           queryClient.invalidateQueries({ queryKey: ['runs'] })
+          queryClient.invalidateQueries({ queryKey: ['hit_outcome'] })
         }}
       >
         take swing
