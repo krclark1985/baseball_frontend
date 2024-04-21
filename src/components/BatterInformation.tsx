@@ -21,6 +21,7 @@ export default function BatterInformation({ gameId }: BatterInformationProps) {
     queryKey: ['batter'],
     queryFn: getCurrentBatter,
     retry: 1,
+    refetchOnWindowFocus: false,
   })
 
   if (!currentBatterQuery.data) {

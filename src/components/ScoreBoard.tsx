@@ -41,8 +41,6 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
     return <div />
   }
 
-  console.log('tteamsInfoQuery', teamsInfoQuery.data)
-
   const { team1_name, team2_name } = teamsInfoQuery.data
   const { team1_runs: homeScore, team2_runs: awayScore } = runsQuery.data
 
@@ -62,7 +60,7 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
     <Box
       ml={5}
       width="100%"
-      p={5}
+      p={1}
       mt={5}
       bgcolor={TeamColors['San Diego Padres'].bgColor}
       maxWidth={400}
@@ -74,8 +72,11 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography px={2} fontWeight={600} width="100%" fontSize={26} py={4}>
-          {homeName}
+        <Box pl={2} pt={1}>
+          <img src={`${homeColorInfo.png}`} style={{ maxWidth: 70 }} />
+        </Box>
+        <Typography fontSize={30} color="white" textAlign="center">
+          {homeColorInfo.abbr}
         </Typography>
         <Typography mr={3} fontWeight={600} fontSize={34}>
           {homeScore}
@@ -92,8 +93,11 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography px={2} py={4} fontWeight={600} width="100%" fontSize={26}>
-          {awayName}
+        <Box pl={2} pt={1}>
+          <img src={`${awayColorInfo.png}`} style={{ maxWidth: 70 }} />
+        </Box>
+        <Typography fontSize={30} color="white" textAlign="center">
+          {awayColorInfo.abbr}
         </Typography>
         <Typography mr={3} fontWeight={600} fontSize={34}>
           {awayScore}
