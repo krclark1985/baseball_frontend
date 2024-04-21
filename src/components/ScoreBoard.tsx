@@ -57,14 +57,7 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
   }
 
   return (
-    <Box
-      ml={5}
-      width="100%"
-      p={1}
-      mt={5}
-      bgcolor={TeamColors['San Diego Padres'].bgColor}
-      maxWidth={400}
-    >
+    <Box minWidth={400}>
       <Box
         display="flex"
         color={homeColorInfo.color}
@@ -78,7 +71,13 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
         <Typography fontSize={30} color="white" textAlign="center">
           {homeColorInfo.abbr}
         </Typography>
-        <Typography mr={3} fontWeight={600} fontSize={34}>
+        <Typography
+          mr={3}
+          fontWeight={600}
+          fontSize={34}
+          textAlign="center"
+          width={50}
+        >
           {homeScore}
         </Typography>
       </Box>
@@ -99,7 +98,13 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
         <Typography fontSize={30} color="white" textAlign="center">
           {awayColorInfo.abbr}
         </Typography>
-        <Typography mr={3} fontWeight={600} fontSize={34}>
+        <Typography
+          mr={3}
+          fontWeight={600}
+          fontSize={34}
+          textAlign="center"
+          width={50}
+        >
           {awayScore}
         </Typography>
       </Box>

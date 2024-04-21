@@ -4,26 +4,13 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import ScoreBoard from '../components/ScoreBoard'
 import BatterInformation from '../components/BatterInformation'
 import Bases from '../components/Bases'
+import Box from '@mui/material/Box'
+import InningBoard from './InningBoard'
+import PitchCount from './PitchCount'
 
 export default function GamePage() {
   const { gameId } = useParams()
   const queryClient = useQueryClient()
-
-  const getInning = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/inning`
-    )
-
-    return response.data
-  }
-
-  const getOuts = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/outs`
-    )
-
-    return response.data
-  }
 
   const getHitOutcome = async () => {
     const response = await axios.get(
@@ -33,34 +20,21 @@ export default function GamePage() {
     return response.data
   }
 
-  const inningQuery = useQuery({
-    queryKey: ['inning'],
-    queryFn: getInning,
-    retry: 1,
-  })
-
-  const outsQuery = useQuery({
-    queryKey: ['outs'],
-    queryFn: getOuts,
-    retry: 1,
-  })
-
   const hitOutcomeQuery = useQuery({
     queryKey: ['hit_outcome'],
     queryFn: getHitOutcome,
   })
 
-  console.log('inning', inningQuery.data)
-  console.log('outs', outsQuery.data)
-
   return (
     <>
-      <ScoreBoard gameId={Number(gameId) as any} />
+      <Box ml={5} width="100%" p={1} mt={5} maxWidth={400} display="flex">
+        <ScoreBoard gameId={Number(gameId) as any} />
+        <InningBoard gameId={Number(gameId) as number} />
+        <Bases gameId={Number(gameId) as number} />
+        <PitchCount gameId={Number(gameId) as number} />
+      </Box>
       <BatterInformation gameId={Number(gameId) as any} />
-      <Bases gameId={Number(gameId) as number} />
 
-      <div>inning: {inningQuery.data}</div>
-      <div>outs: {outsQuery.data}</div>
       <div>hit outcome: {hitOutcomeQuery.data}</div>
 
       <button
@@ -73,6 +47,9 @@ export default function GamePage() {
           queryClient.invalidateQueries({ queryKey: ['inning'] })
           queryClient.invalidateQueries({ queryKey: ['runs'] })
           queryClient.invalidateQueries({ queryKey: ['hit_outcome'] })
+          queryClient.invalidateQueries({ queryKey: ['strikes'] })
+          queryClient.invalidateQueries({ queryKey: ['balls'] })
+          queryClient.invalidateQueries({ queryKey: ['top_of_inning'] })
         }}
       >
         take swing
