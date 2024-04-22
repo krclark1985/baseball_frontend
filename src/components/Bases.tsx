@@ -50,7 +50,7 @@ export default function Bases({ gameId }: BasesProps) {
     borderRadius: '50%',
   } as CSSProperties
 
-  if (!runnersQuery.data || !outsQuery.data) {
+  if (!runnersQuery.data || outsQuery.error || outsQuery.isLoading) {
     return null // Replace with loader
   }
 
