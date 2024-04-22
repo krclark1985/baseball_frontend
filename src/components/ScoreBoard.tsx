@@ -3,26 +3,14 @@ import Typography from '@mui/material/Typography'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { TeamColors } from '../team/TeamColors'
+import getTeamInfo from '../utils/getTeamInfo'
 
 interface ScoreBoardProps {
   gameId: number
+  teamsInfo: { team1_name: string; team2_name: string }
 }
 
-export default function ScoreBoard({ gameId }: ScoreBoardProps) {
-  const getTeamsInfo = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/teams_info`
-    )
-
-    return response.data
-  }
-
-  const teamsInfoQuery = useQuery({
-    queryKey: ['teamInfo'],
-    queryFn: getTeamsInfo,
-    retry: 1,
-  })
-
+export default function ScoreBoard({ gameId, teamsInfo }: ScoreBoardProps) {
   const getRuns = async () => {
     const response = await axios.get(
       `http://localhost:5000/game/${gameId}/runs`
@@ -37,39 +25,33 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
     retry: 1,
   })
 
-  if (!teamsInfoQuery.data || !runsQuery.data) {
+  if (!teamsInfo || !runsQuery.data) {
     return <div />
   }
 
-  const { team1_name, team2_name } = teamsInfoQuery.data
+  const { team1_name, team2_name } = teamsInfo
   const { team1_runs: homeScore, team2_runs: awayScore } = runsQuery.data
 
   const homeName = team1_name as keyof typeof TeamColors
   const awayName = team2_name as keyof typeof TeamColors
 
-  const homeColorInfo = TeamColors[homeName] || {
-    color: 'white',
-    bgColor: 'blue',
-  }
-  const awayColorInfo = TeamColors[awayName] || {
-    color: 'white',
-    bgColor: 'blue',
-  }
+  const homeTeamInfo = getTeamInfo(homeName)
+  const awayTeamInfo = getTeamInfo(awayName)
 
   return (
     <Box minWidth={400}>
       <Box
         display="flex"
-        color={homeColorInfo.color}
-        bgcolor={homeColorInfo.bgColor}
+        color={homeTeamInfo.color}
+        bgcolor={homeTeamInfo.bgColor}
         justifyContent="space-between"
         alignItems="center"
       >
         <Box pl={2} pt={1}>
-          <img src={`${homeColorInfo.png}`} style={{ maxWidth: 70 }} />
+          <img src={`${homeTeamInfo.png}`} style={{ maxWidth: 70 }} />
         </Box>
         <Typography fontSize={30} color="white" textAlign="center">
-          {homeColorInfo.abbr}
+          {homeTeamInfo.abbr}
         </Typography>
         <Typography
           mr={3}
@@ -87,16 +69,16 @@ export default function ScoreBoard({ gameId }: ScoreBoardProps) {
       <Box
         display="flex"
         width="100%"
-        color={awayColorInfo.color}
-        bgcolor={awayColorInfo.bgColor}
+        color={awayTeamInfo.color}
+        bgcolor={awayTeamInfo.bgColor}
         justifyContent="space-between"
         alignItems="center"
       >
         <Box pl={2} pt={1}>
-          <img src={`${awayColorInfo.png}`} style={{ maxWidth: 70 }} />
+          <img src={`${awayTeamInfo.png}`} style={{ maxWidth: 70 }} />
         </Box>
         <Typography fontSize={30} color="white" textAlign="center">
-          {awayColorInfo.abbr}
+          {awayTeamInfo.abbr}
         </Typography>
         <Typography
           mr={3}

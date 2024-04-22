@@ -3,12 +3,20 @@ import { useQuery } from '@tanstack/react-query'
 import { Player } from '../types/Player'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import getTeamInfo from '../utils/getTeamInfo'
+import { TeamColors } from '../team/TeamColors'
 
 interface BatterInformationProps {
   gameId: number
+  topOfInning: boolean
+  teamsInfo: { team1_name: string; team2_name: string }
 }
 
-export default function BatterInformation({ gameId }: BatterInformationProps) {
+export default function BatterInformation({
+  gameId,
+  topOfInning,
+  teamsInfo,
+}: BatterInformationProps) {
   const getCurrentBatter = async () => {
     const response = await axios.get(
       `http://localhost:5000/game/${gameId}/current_batter`
@@ -16,6 +24,10 @@ export default function BatterInformation({ gameId }: BatterInformationProps) {
 
     return response.data
   }
+
+  const currentTeam = topOfInning ? teamsInfo.team1_name : teamsInfo.team2_name
+
+  const currentTeamInfo = getTeamInfo(currentTeam as keyof typeof TeamColors)
 
   const currentBatterQuery = useQuery({
     queryKey: ['batter'],
@@ -31,32 +43,83 @@ export default function BatterInformation({ gameId }: BatterInformationProps) {
   const player = currentBatterQuery.data as Player
 
   return (
-    <Box ml={5} mt={3}>
-      <Typography fontSize={24}>Current Batter</Typography>
-      <Box
-        p={3}
-        bgcolor="black"
-        maxWidth={600}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Box>
-          <Typography color="white" fontSize={24}>
-            {player.name} - {player.primary_position}
-          </Typography>
-          <Typography color="white" fontSize={24}>
-            Avg - {player.average}
-          </Typography>
-          <Typography color="white" fontSize={24}>
-            Homeruns - {player.homers}
-          </Typography>
-          <Typography color="white" fontSize={24}>
-            RBI - {player.rbi}
-          </Typography>
+    <Box
+      position="absolute"
+      bottom={40}
+      width="100%"
+      display="flex"
+      justifyContent="center"
+      left={-50}
+    >
+      <Box display="flex" width="70%">
+        <Box width="100%" display="flex">
+          <img
+            style={{ width: 80 }}
+            src={`https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_150,q_auto:best/v1/people/${player.mlb_stats_id}/headshot/67/current`}
+          />
+
+          <Box display="flex" flexDirection="column" minWidth="100%">
+            <Box bgcolor={currentTeamInfo.bgColor} pl={4}>
+              <Typography color="white" fontSize={24}>
+                <span
+                  style={{
+                    marginRight: 24,
+                    fontSize: 14,
+                    padding: 4,
+                  }}
+                >
+                  {player.primary_position}
+                </span>
+                <span style={{ fontWeight: 'bold' }}>{player.name}</span>
+              </Typography>
+            </Box>
+
+            <Box bgcolor="rgba(0,0,0,.85)" p={2.25} display="flex">
+              <Box
+                width="33%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                borderRight="1px solid white"
+                color="white"
+              >
+                <Typography fontSize={32}>
+                  {player.average.substring(1)}
+                </Typography>
+                <Box pt={1} ml={1}>
+                  <Typography fontSize={18}>AVG</Typography>
+                </Box>
+              </Box>
+
+              <Box
+                width="33%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                borderRight="1px solid white"
+                color="white"
+              >
+                <Typography fontSize={32}>{player.homers}</Typography>
+                <Box pt={1} ml={1}>
+                  <Typography fontSize={18}>HR</Typography>
+                </Box>
+              </Box>
+
+              <Box
+                width="33%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                color="white"
+              >
+                <Typography fontSize={32}>{player.rbi}</Typography>
+                <Box pt={1} ml={1}>
+                  <Typography fontSize={18}>RBI</Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
-        <img
-          src={`https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${player.mlb_stats_id}/headshot/67/current`}
-        />
       </Box>
     </Box>
   )

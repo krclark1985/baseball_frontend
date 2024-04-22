@@ -4,20 +4,13 @@ import axios from 'axios'
 
 interface InningBoardProps {
   gameId: number
+  topOfInning: boolean
 }
 
-export default function InningBoard({ gameId }: InningBoardProps) {
+export default function InningBoard({ gameId, topOfInning }: InningBoardProps) {
   const getInning = async () => {
     const response = await axios.get(
       `http://localhost:5000/game/${gameId}/inning`
-    )
-
-    return response.data
-  }
-
-  const getTopOfInning = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/top_of_inning`
     )
 
     return response.data
@@ -30,24 +23,9 @@ export default function InningBoard({ gameId }: InningBoardProps) {
     refetchOnWindowFocus: false,
   })
 
-  const topOfInningQuery = useQuery({
-    queryKey: ['top_of_inning'],
-    queryFn: getTopOfInning,
-    retry: 1,
-    refetchOnWindowFocus: false,
-  })
-
-  if (
-    !inningQuery.data ||
-    topOfInningQuery.error ||
-    topOfInningQuery.isLoading
-  ) {
+  if (!inningQuery.data) {
     return null // TODO: Replace with loader
   }
-
-  console.log('top of inning', topOfInningQuery.data)
-
-  const topInning = !!topOfInningQuery.data
 
   return (
     <Box
@@ -68,7 +46,7 @@ export default function InningBoard({ gameId }: InningBoardProps) {
           height: 0,
           borderLeft: '10px solid transparent',
           borderRight: '10px solid transparent',
-          borderBottom: `10px solid ${topInning ? 'white' : 'gray'}`,
+          borderBottom: `10px solid ${topOfInning ? 'white' : 'gray'}`,
         }}
       />
 
@@ -90,7 +68,7 @@ export default function InningBoard({ gameId }: InningBoardProps) {
           height: 0,
           borderLeft: '10px solid transparent',
           borderRight: '10px solid transparent',
-          borderTop: `10px solid ${!topInning ? 'white' : 'gray'}`,
+          borderTop: `10px solid ${!topOfInning ? 'white' : 'gray'}`,
         }}
       />
     </Box>
