@@ -5,6 +5,7 @@ import ScoreBoard from '../components/ScoreBoard'
 import BatterInformation from '../components/BatterInformation'
 import Bases from '../components/Bases'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import InningBoard from './InningBoard'
 import PitchCount from './PitchCount'
 import LoadingScreen from '../components/LoadingScreen'
@@ -57,49 +58,109 @@ export default function GamePage() {
     refetchOnWindowFocus: false,
   })
 
+  const invalidateQueries = () => {
+    setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey: ['strikes'] })
+      queryClient.invalidateQueries({ queryKey: ['balls'] })
+      queryClient.invalidateQueries({ queryKey: ['runners'] })
+      queryClient.invalidateQueries({ queryKey: ['runs'] })
+      queryClient.invalidateQueries({ queryKey: ['hit_outcome'] })
+      queryClient.invalidateQueries({ queryKey: ['batter'] })
+      queryClient.invalidateQueries({ queryKey: ['inning'] })
+      queryClient.invalidateQueries({ queryKey: ['top_of_inning'] })
+      queryClient.invalidateQueries({ queryKey: ['outs'] })
+    }, 500)
+  }
+
   if (!teamsInfoQuery.data) {
     return <LoadingScreen />
   }
 
   return (
     <>
-      <Box ml={2} width="100%" p={1} mt={2} maxWidth={400} display="flex">
-        <ScoreBoard
-          gameId={Number(gameId) as any}
-          teamsInfo={teamsInfoQuery.data}
-        />
-        <InningBoard
-          gameId={Number(gameId) as number}
-          topOfInning={topOfInningQuery.data}
-        />
-        <Bases gameId={Number(gameId) as number} />
-        <PitchCount gameId={Number(gameId) as number} />
+      <Box width="100%" p={1} mt={2} display="flex" justifyContent="center">
+        <Box bgcolor="white" p={1} display="flex">
+          <Box>
+            <ScoreBoard
+              gameId={Number(gameId) as any}
+              teamsInfo={teamsInfoQuery.data}
+            />
+          </Box>
+          <InningBoard
+            gameId={Number(gameId) as number}
+            topOfInning={topOfInningQuery.data}
+          />
+          <Bases gameId={Number(gameId) as number} />
+          <PitchCount gameId={Number(gameId) as number} />
+        </Box>
       </Box>
+
       <BatterInformation
         gameId={Number(gameId) as any}
         topOfInning={topOfInningQuery.data}
         teamsInfo={teamsInfoQuery.data}
       />
 
-      <div>hit outcome: {hitOutcomeQuery.data}</div>
+      <Box p={3} maxWidth="400px">
+        <Box
+          sx={{
+            border: '2px solid green',
+            padding: 2.5,
+            borderRadius: 4,
+            fontSize: 18,
+            textAlign: 'center',
+            marginBottom: 2,
+            backgroundColor: 'white',
+            cursor: 'pointer',
+            fontWeight: 500,
+            transition: 'all 0.25s ease',
+            '&:hover': {
+              backgroundColor: 'green',
+              color: 'white',
+              boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+            },
+          }}
+          onClick={() => {
+            axios.get(`http://localhost:5000/game/${gameId}/pitch/${1}`)
 
-      <button
-        onClick={() => {
-          axios.get(`http://localhost:5000/game/${gameId}/pitch/${1}`)
+            invalidateQueries()
+          }}
+        >
+          Swing at pitch
+        </Box>
 
-          queryClient.invalidateQueries({ queryKey: ['batter'] })
-          queryClient.invalidateQueries({ queryKey: ['outs'] })
-          queryClient.invalidateQueries({ queryKey: ['runners'] })
-          queryClient.invalidateQueries({ queryKey: ['inning'] })
-          queryClient.invalidateQueries({ queryKey: ['runs'] })
-          queryClient.invalidateQueries({ queryKey: ['hit_outcome'] })
-          queryClient.invalidateQueries({ queryKey: ['strikes'] })
-          queryClient.invalidateQueries({ queryKey: ['balls'] })
-          queryClient.invalidateQueries({ queryKey: ['top_of_inning'] })
-        }}
-      >
-        take swing
-      </button>
+        <Box
+          sx={{
+            border: '2px solid #F0B241',
+            padding: 2.5,
+            borderRadius: 4,
+            fontSize: 18,
+            textAlign: 'center',
+            backgroundColor: 'white',
+            cursor: 'pointer',
+            fontWeight: 500,
+            transition: 'all 0.25s ease',
+            '&:hover': {
+              backgroundColor: '#F0B241',
+              color: 'white',
+              boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+            },
+          }}
+          onClick={() => {
+            axios.get(`http://localhost:5000/game/${gameId}/pitch/${2}`)
+
+            invalidateQueries()
+          }}
+        >
+          Take pitch
+        </Box>
+
+        <Box mt={5}>
+          <Typography color="white" fontSize={32} fontWeight={600}>
+            {hitOutcomeQuery.data}
+          </Typography>
+        </Box>
+      </Box>
     </>
   )
 }

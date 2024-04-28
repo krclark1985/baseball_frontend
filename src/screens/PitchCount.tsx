@@ -18,7 +18,7 @@ export default function PitchCount({ gameId }: PitchCountProps) {
 
   const getBallCount = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/strikes`
+      `http://localhost:5000/game/${gameId}/balls`
     )
 
     return response.data
@@ -55,7 +55,7 @@ export default function PitchCount({ gameId }: PitchCountProps) {
       justifyContent="center"
     >
       <Typography color="white" fontSize={28}>
-        {strikesQuery.data} - {ballsQuery.data}
+        {ballsQuery.data} - {strikesQuery.data}
       </Typography>
     </Box>
   )

@@ -49,16 +49,20 @@ export default function BatterInformation({
       width="100%"
       display="flex"
       justifyContent="center"
-      left={-50}
     >
-      <Box display="flex" width="70%">
+      <Box display="flex" width="70%" p={1} bgcolor="white">
         <Box width="100%" display="flex">
           <img
             style={{ width: 80 }}
             src={`https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_150,q_auto:best/v1/people/${player.mlb_stats_id}/headshot/67/current`}
           />
 
-          <Box display="flex" flexDirection="column" minWidth="100%">
+          <Box
+            display="flex"
+            flexDirection="column"
+            minWidth="calc(100% - 80px)"
+            bgcolor="white"
+          >
             <Box bgcolor={currentTeamInfo.bgColor} pl={4}>
               <Typography color="white" fontSize={24}>
                 <span

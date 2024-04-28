@@ -58,11 +58,11 @@ export default function Bases({ gameId }: BasesProps) {
   const basesWithRunners = Object.values(runnersQuery.data)
 
   return (
-    <Box minHeight="100%" bgcolor="black" p={3} borderRight="1px solid white">
+    <Box bgcolor="black" p={3} borderRight="1px solid white">
       <Box>
         <Box
           style={{
-            transform: 'rotate(45deg)',
+            transform: 'rotate(135deg)',
           }}
         >
           <Box display="flex">
@@ -74,6 +74,12 @@ export default function Bases({ gameId }: BasesProps) {
                   : 'gray',
               }}
             />
+
+            {/* When rotated this base is hidden  */}
+            {/* This box is hidding make same bg color as the container div  */}
+            <Box style={{ backgroundColor: 'black' }} />
+          </Box>
+          <Box display="flex">
             <Box
               style={{
                 ...BoxStyle,
@@ -82,8 +88,7 @@ export default function Bases({ gameId }: BasesProps) {
                   : 'gray',
               }}
             />
-          </Box>
-          <Box display="flex">
+
             <Box
               style={{
                 ...BoxStyle,
@@ -92,8 +97,6 @@ export default function Bases({ gameId }: BasesProps) {
                   : 'gray',
               }}
             />
-            {/* This box is hidding make same bg color as the container div  */}
-            <Box style={{ ...BoxStyle, backgroundColor: 'black' }} />
           </Box>
         </Box>
 
