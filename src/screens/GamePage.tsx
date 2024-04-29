@@ -9,10 +9,18 @@ import Typography from '@mui/material/Typography'
 import InningBoard from './InningBoard'
 import PitchCount from './PitchCount'
 import LoadingScreen from '../components/LoadingScreen'
+import { useEffect } from 'react'
 
 export default function GamePage() {
   const { gameId } = useParams()
   const queryClient = useQueryClient()
+
+  useEffect(() => {
+    const body = document.getElementsByTagName('body')[0]
+
+    body.style.background = `url('../../public/field-2-bg.jpeg') no-repeat top center fixed`
+    body.style.backgroundSize = 'cover'
+  }, [])
 
   const getTeamsInfo = async () => {
     const response = await axios.get(
