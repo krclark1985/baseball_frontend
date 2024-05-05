@@ -6,6 +6,7 @@ import ThreeBaseball from '../components/ThreeBaseball'
 export default function HomePage() {
   const navigate = useNavigate()
   return (
+    // @ts-expect-error union too complex
     <Box height="100vh" width="100vw" bgcolor="#FFFFF6">
       <Box p={5}>
         <img src="/mlb-flask-logo.jpg" style={{ width: 200 }} />
@@ -44,15 +45,15 @@ export default function HomePage() {
                 backgroundPosition: 'left bottom',
               },
             }}
+            onClick={() => {
+              navigate('/game-create')
+            }}
           >
             <Typography
               fontSize={18}
               color="white"
               fontWeight={600}
               style={{ cursor: 'pointer' }}
-              onClick={() => {
-                navigate('/game-create')
-              }}
             >
               Start New Game
             </Typography>

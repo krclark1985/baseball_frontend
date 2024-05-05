@@ -40,13 +40,75 @@ export default function TeamPicker() {
 
   if (awayTeam && homeTeam) {
     return (
-      <Box>
-        Please confirm these are the teams you want
-        <Typography>away team - {awayTeam.name}</Typography>
-        <Typography>home team - {homeTeam.name}</Typography>
+      // @ts-expect-error union type too difficult to represent
+      <Box p={3}>
+        <Typography variant="h6" mb={10}>
+          Please confirm these are the teams you want
+        </Typography>
+        <Box
+          display="flex"
+          justifyContent="space-around"
+          maxWidth={800}
+          margin="24px auto"
+          alignItems="center"
+        >
+          <Box
+            display="flex"
+            justifyContent="center"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <Typography fontWeight={600} mb={2} variant="h4" textAlign="center">
+              {awayTeam.name}
+            </Typography>
+            <img
+              src={`${TeamColors[awayTeam.name].png}`}
+              style={{ maxWidth: '100%', width: 250 }}
+            />
+          </Box>
+
+          <Typography
+            fontWeight={600}
+            variant="h2"
+            color="#445E93"
+            mr={7}
+            ml={7}
+          >
+            VS
+          </Typography>
+
+          <Box
+            display="flex"
+            justifyContent="center"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <Typography fontWeight={600} mb={2} variant="h4" textAlign="center">
+              {homeTeam.name}
+            </Typography>
+            <img
+              src={`${TeamColors[homeTeam.name].png}`}
+              style={{ maxWidth: '100%', width: 250 }}
+            />
+          </Box>
+        </Box>
         <Box>
-          <button
+          <Box
             style={{ cursor: 'pointer' }}
+            maxWidth={200}
+            p={2}
+            mt={10}
+            borderRadius={2}
+            border="1px solid rgba(0, 0, 0, 0.25)"
+            textAlign="center"
+            sx={{
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                backgroundColor: 'green',
+                color: 'white',
+                boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+              },
+            }}
             onClick={async () => {
               const response = await axios.put(
                 `http://localhost:5000/game/${params.gameId}/team_info`,
@@ -58,31 +120,37 @@ export default function TeamPicker() {
                 }
               )
 
-              console.log({
-                team1_id: awayTeam.id,
-                team1_name: awayTeam.name,
-                team2_id: homeTeam.id,
-                team2_name: homeTeam.name,
-              })
-
               if (response.status === 200) {
                 navigate(`/game/${params.gameId}/lineups/randomzie`)
               }
             }}
           >
-            confirm
-          </button>
+            <span>Continue to Lineup</span>
+          </Box>
         </Box>
         <Box>
-          <button
+          <Box
+            maxWidth={200}
+            p={2}
+            borderRadius={2}
+            border="1px solid rgba(0, 0, 0, 0.25)"
+            textAlign="center"
             style={{ cursor: 'pointer', marginTop: 16 }}
+            sx={{
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                backgroundColor: '#b40c44',
+                color: 'white',
+                boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+              },
+            }}
             onClick={() => {
               setAwayTeam(null)
               setHomeTeam(null)
             }}
           >
-            reset
-          </button>
+            Reset Teams
+          </Box>
         </Box>
       </Box>
     )

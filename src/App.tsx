@@ -6,7 +6,8 @@ import GameCreator from './screens/GameCreator'
 import TeamPicker from './screens/TeamPicker'
 import LineupGenerator from './screens/LineupGenerator'
 import HomePage from './screens/HomePage'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import createTheme from '@mui/material/styles/createTheme'
 
 const queryClient = new QueryClient()
 

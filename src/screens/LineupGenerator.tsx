@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { Player } from '../types/Player'
 
 export default function LineupGenerator() {
@@ -49,12 +50,6 @@ export default function LineupGenerator() {
     refetchOnWindowFocus: false,
   })
 
-  console.log(
-    teamInfoQuery.data,
-    randomTeamPlayers1Query.data,
-    randomTeamPlayers2Query.data
-  )
-
   if (
     !teamInfoQuery.data ||
     !randomTeamPlayers1Query.data ||
@@ -67,24 +62,43 @@ export default function LineupGenerator() {
   const homeTeam = randomTeamPlayers2Query.data as Player[]
 
   return (
-    <>
-      <Box display="flex">
-        <Box>
-          Away team lineup
+    <Box p={3}>
+      <Box display="flex" mb={5}>
+        <Box mr={15}>
+          <Typography variant="h4">Away lineup</Typography>
           {awayTeam.map((player) => (
-            <div key={player.id}> {player.name} </div>
+            <div key={player.id}>
+              {' '}
+              {player.name} - {player.primary_position}{' '}
+            </div>
           ))}
         </Box>
         <Box ml={4}>
-          Home team lineup
+          <Typography variant="h4">Home lineup</Typography>
           {homeTeam.map((player) => (
-            <div key={player.id}> {player.name} </div>
+            <div key={player.id}>
+              {' '}
+              {player.name} - {player.primary_position}{' '}
+            </div>
           ))}
         </Box>
       </Box>
 
-      <button
-        style={{ marginRight: 20 }}
+      <Box
+        maxWidth={200}
+        p={2}
+        borderRadius={2}
+        border="1px solid rgba(0, 0, 0, 0.25)"
+        textAlign="center"
+        style={{ cursor: 'pointer', marginTop: 16 }}
+        sx={{
+          transition: 'all 0.25s ease',
+          '&:hover': {
+            backgroundColor: 'green',
+            color: 'white',
+            boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+          },
+        }}
         onClick={async () => {
           const response = await axios.post(
             `http://localhost:5000/lineups/${params.gameId}`,
@@ -99,17 +113,31 @@ export default function LineupGenerator() {
           navigate(`/game/${params.gameId}`)
         }}
       >
-        confirm
-      </button>
+        Start Game
+      </Box>
 
-      <button
+      <Box
+        maxWidth={200}
+        p={2}
+        borderRadius={2}
+        border="1px solid rgba(0, 0, 0, 0.25)"
+        textAlign="center"
+        style={{ cursor: 'pointer', marginTop: 16 }}
+        sx={{
+          transition: 'all 0.25s ease',
+          '&:hover': {
+            backgroundColor: '#445E93',
+            color: 'white',
+            boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+          },
+        }}
         onClick={() => {
           queryClient.invalidateQueries({ queryKey: ['random_team1'] })
           queryClient.invalidateQueries({ queryKey: ['random_team2'] })
         }}
       >
-        randomize
-      </button>
-    </>
+        Randomize
+      </Box>
+    </Box>
   )
 }
