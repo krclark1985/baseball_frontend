@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import LoadingScreen from '../components/LoadingScreen'
 import { useState } from 'react'
+import { TeamColors } from '../team/TeamColors'
+import Grid from '@mui/material/Grid'
 
 interface Team {
   id: number
@@ -63,8 +65,6 @@ export default function TeamPicker() {
                 team2_name: homeTeam.name,
               })
 
-              console.log(response)
-
               if (response.status === 200) {
                 navigate(`/game/${params.gameId}/lineups/randomzie`)
               }
@@ -89,41 +89,74 @@ export default function TeamPicker() {
   }
 
   return (
-    <>
-      {!awayTeam
-        ? 'Player 1 pick your away team'
-        : 'Player 2 pick the home team'}
+    <Box p={3}>
+      <Typography fontFamily="PlayBall" variant="h3">
+        {!awayTeam ? 'Player 1' : 'Player 2'}
+      </Typography>
+      <Typography mb={3}>Pick your team!</Typography>
 
-      {allTeams.length > 0 &&
-        allTeams.map((team: Team) => {
-          return (
-            <div
-              onClick={() => {
-                if (!awayTeam) {
-                  setAwayTeam(team)
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        columnGap={3}
+        rowGap={3}
+      >
+        {allTeams.length > 0 &&
+          allTeams.map((team: Team) => {
+            const teamName = team.name as any
 
-                  return
-                }
+            if (team.id === awayTeam?.id) {
+              return null
+            }
 
-                setHomeTeam(team)
-              }}
-              key={team.mlb_id}
-              style={{
-                cursor: 'pointer',
-                backgroundColor: 'green',
-                padding: 12,
-                color: 'white',
-                textAlign: 'center',
-                maxWidth: 300,
-                borderRadius: 12,
-                margin: 10,
-                fontWeight: 'bold',
-              }}
-            >
-              {team.name}
-            </div>
-          )
-        })}
-    </>
+            return (
+              <Grid
+                item
+                xs={2}
+                rowSpacing={1}
+                columnSpacing={2}
+                lg={2}
+                md={2}
+                sm={2}
+                xl={2}
+                borderRadius={2}
+                sx={{
+                  transition: 'all 0.25s ease',
+                  '&:hover': {
+                    boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.20)',
+                  },
+                }}
+                p={1}
+                border={'1px solid rgba(0, 0, 0, 0.2)'}
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  if (!awayTeam) {
+                    setAwayTeam(team)
+
+                    return
+                  }
+
+                  setHomeTeam(team)
+                }}
+                key={team.mlb_id}
+              >
+                {TeamColors[teamName] && (
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <img
+                      style={{ width: 100 }}
+                      src={`${TeamColors[teamName].png}`}
+                    />
+                  </Box>
+                )}
+              </Grid>
+            )
+          })}
+      </Grid>
+    </Box>
   )
 }

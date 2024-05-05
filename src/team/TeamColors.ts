@@ -2,7 +2,7 @@
 // https://teamcolorcodes.com/new-york-mets-color-codes/
 
 // https://coolors.co/fffff6-f93943-445e93-878e76-fbaf00 
-export const TeamColors = {
+export const TeamColors: Record<string, any> = {
   ['Arizona Diamondbacks']: {
     color: 'white', 
     bgColor: '#A71930', 
@@ -18,7 +18,7 @@ export const TeamColors = {
   ['Baltimore Orioles']: {
     color: 'white', 
     bgColor: '#DF4601', 
-    png: '/Baltimore Orioles.png', 
+    png: '/Baltimore-Orioles.png', 
     abbr: 'BAL'
   }, 
   ['Boston Red Sox']: {
@@ -45,7 +45,7 @@ export const TeamColors = {
     png: '/Cincinnati-Reds.png', 
     abbr: 'CIN'
   }, 
-  ['Cleveland Indians']: {
+  ['Cleveland Guardians']: {
     color: 'white', 
     bgColor: '#00385D', 
     png: '/Cleveland-Indians.png', 
@@ -81,10 +81,10 @@ export const TeamColors = {
     png: '/Los-Angeles-Angels.png', 
     abbr: 'LAA'
   }, 
-  ['Los Angeles Dogers']: {
+  ['Los Angeles Dodgers']: {
     color: 'white', 
     bgColor: '#005A9C', 
-    png: '/Los-Angeles-Dogers.png', 
+    png: '/Los-Angeles-Dodgers.png', 
     abbr: 'LAD'
   }, 
   ['Miami Marlins']: {
@@ -138,7 +138,7 @@ export const TeamColors = {
   ['St. Louis Cardinals']: {
     color: 'white', 
     bgColor: '#C41E3A', 
-    png: '/Saint.-Louis-Cardinals.png',
+    png: '/St.-Louis-Cardinals.png',
     abbr: 'STL'
   }, 
   ['San Diego Padres']: {

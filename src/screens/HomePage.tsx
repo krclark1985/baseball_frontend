@@ -25,26 +25,37 @@ export default function HomePage() {
             Play Ball!
           </Typography>
           <Box
-            width={400}
+            width={300}
             display="flex"
             justifyContent="center"
             alignItems="center"
             mt={5}
             border="1px solid rgba(0, 0, 0, .25)"
             style={{ borderRadius: 4, cursor: 'pointer' }}
-            p={5}
+            p={3}
             position="relative"
             zIndex={100}
-            bgcolor="white"
+            sx={{
+              background: 'linear-gradient(to right, #445E93 50%, #b40c44 50%)',
+              backgroundSize: '200% 100%',
+              backgroundPosition: 'right bottom',
+              transition: 'all 0.5s ease',
+              '&:hover': {
+                backgroundPosition: 'left bottom',
+              },
+            }}
           >
-            <span
+            <Typography
+              fontSize={18}
+              color="white"
+              fontWeight={600}
               style={{ cursor: 'pointer' }}
               onClick={() => {
                 navigate('/game-create')
               }}
             >
-              New Game
-            </span>
+              Start New Game
+            </Typography>
           </Box>
         </Box>
       </Box>

@@ -29,7 +29,6 @@ export default function GameCreator() {
     >
       <Box width="80vw">
         <LinearProgress />
-        working
       </Box>
     </Box>
   )
