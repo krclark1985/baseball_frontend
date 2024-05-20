@@ -1,20 +1,16 @@
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import ThreeBaseball from '../components/ThreeBaseball'
 
 export default function HomePage() {
   const navigate = useNavigate()
 
   return (
-    // @ts-expect-error union too complex
     <Box height="100vh" width="100vw" bgcolor="#FFFFF6">
       <Box p={5}>
         <img src="/mlb-flask-logo.jpg" style={{ width: 200 }} />
 
-        <Box>
-          <ThreeBaseball />
-        </Box>
+        <Box></Box>
         <Box>
           <Typography
             mt={4}
