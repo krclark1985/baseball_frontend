@@ -21,7 +21,9 @@ export default function TeamPicker() {
   const [homeTeam, setHomeTeam] = useState<Team | null>(null)
 
   const getTeams = async () => {
-    const response = await axios.get('http://localhost:5000/teams')
+    const response = await axios.get(
+      `${import.meta.env.VITE_SERVER_ADDRESS}/teams`
+    )
     const json = await response.data
 
     return json
@@ -111,7 +113,9 @@ export default function TeamPicker() {
             }}
             onClick={async () => {
               const response = await axios.put(
-                `http://localhost:5000/game/${params.gameId}/team_info`,
+                `${import.meta.env.VITE_SERVER_ADDRESS}/game/${
+                  params.gameId
+                }/team_info`,
                 {
                   team1_id: awayTeam.id,
                   team1_name: awayTeam.name,

@@ -19,7 +19,7 @@ export default function BatterInformation({
 }: BatterInformationProps) {
   const getCurrentBatter = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/current_batter`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/current_batter`
     )
 
     return response.data

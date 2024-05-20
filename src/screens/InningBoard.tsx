@@ -10,7 +10,7 @@ interface InningBoardProps {
 export default function InningBoard({ gameId, topOfInning }: InningBoardProps) {
   const getInning = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/inning`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/inning`
     )
 
     return response.data

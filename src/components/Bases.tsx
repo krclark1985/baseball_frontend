@@ -10,7 +10,7 @@ interface BasesProps {
 export default function Bases({ gameId }: BasesProps) {
   const getOuts = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/outs`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/outs`
     )
 
     return response.data
@@ -18,7 +18,7 @@ export default function Bases({ gameId }: BasesProps) {
 
   const getRunners = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/runners`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/runners`
     )
 
     return response.data

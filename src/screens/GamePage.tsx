@@ -24,7 +24,7 @@ export default function GamePage() {
 
   const getTeamsInfo = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/teams_info`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/teams_info`
     )
 
     return response.data
@@ -32,7 +32,7 @@ export default function GamePage() {
 
   const getHitOutcome = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/hit_outcome`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/hit_outcome`
     )
 
     return response.data
@@ -40,7 +40,7 @@ export default function GamePage() {
 
   const getTopOfInning = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/top_of_inning`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/top_of_inning`
     )
 
     return response.data
@@ -109,64 +109,84 @@ export default function GamePage() {
         teamsInfo={teamsInfoQuery.data}
       />
 
-      <Box p={3} maxWidth="400px">
-        <Box
-          sx={{
-            border: '2px solid green',
-            padding: 2.5,
-            borderRadius: 4,
-            fontSize: 18,
-            textAlign: 'center',
-            marginBottom: 2,
-            backgroundColor: 'white',
-            cursor: 'pointer',
-            fontWeight: 500,
-            transition: 'all 0.25s ease',
-            '&:hover': {
-              backgroundColor: 'green',
-              color: 'white',
-              boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
-            },
-          }}
-          onClick={() => {
-            axios.get(`http://localhost:5000/game/${gameId}/pitch/${1}`)
+      <Box p={3} display="flex" flexWrap="wrap">
+        <Box width="400px">
+          <Box
+            sx={{
+              border: '2px solid green',
+              padding: 2.5,
+              borderRadius: 4,
+              fontSize: 18,
+              textAlign: 'center',
+              marginBottom: 2,
+              backgroundColor: 'white',
+              cursor: 'pointer',
+              fontWeight: 500,
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                backgroundColor: 'green',
+                color: 'white',
+                boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+              },
+            }}
+            onClick={() => {
+              axios.get(
+                `${
+                  import.meta.env.VITE_SERVER_ADDRESS
+                }/game/${gameId}/pitch/${1}`
+              )
 
-            invalidateQueries()
-          }}
-        >
-          Swing at pitch
+              invalidateQueries()
+            }}
+          >
+            Swing at pitch
+          </Box>
+
+          <Box
+            sx={{
+              border: '2px solid #F0B241',
+              padding: 2.5,
+              borderRadius: 4,
+              fontSize: 18,
+              textAlign: 'center',
+              backgroundColor: 'white',
+              cursor: 'pointer',
+              fontWeight: 500,
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                backgroundColor: '#F0B241',
+                color: 'white',
+                boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
+              },
+            }}
+            onClick={() => {
+              axios.get(
+                `${
+                  import.meta.env.VITE_SERVER_ADDRESS
+                }/game/${gameId}/pitch/${2}`
+              )
+
+              invalidateQueries()
+            }}
+          >
+            Take pitch
+          </Box>
         </Box>
 
         <Box
-          sx={{
-            border: '2px solid #F0B241',
-            padding: 2.5,
-            borderRadius: 4,
-            fontSize: 18,
-            textAlign: 'center',
-            backgroundColor: 'white',
-            cursor: 'pointer',
-            fontWeight: 500,
-            transition: 'all 0.25s ease',
-            '&:hover': {
-              backgroundColor: '#F0B241',
-              color: 'white',
-              boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
-            },
-          }}
-          onClick={() => {
-            axios.get(`http://localhost:5000/game/${gameId}/pitch/${2}`)
-
-            invalidateQueries()
-          }}
+          p={5}
+          bgcolor="white"
+          borderRadius={4}
+          justifyContent="center"
+          ml={4}
+          alignItems="center"
+          border="1px solid rgba(0,0,0,0.5)"
         >
-          Take pitch
-        </Box>
-
-        <Box mt={5}>
-          <Typography color="white" fontSize={32} fontWeight={600}>
-            {hitOutcomeQuery.data}
-          </Typography>
+          <Box>
+            <Typography fontSize={42} fontWeight={600}>
+              {hitOutcomeQuery.data}
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </>

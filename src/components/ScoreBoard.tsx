@@ -13,7 +13,7 @@ interface ScoreBoardProps {
 export default function ScoreBoard({ gameId, teamsInfo }: ScoreBoardProps) {
   const getRuns = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/runs`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/runs`
     )
 
     return response.data

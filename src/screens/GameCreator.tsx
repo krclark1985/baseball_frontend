@@ -9,7 +9,9 @@ export default function GameCreator() {
 
   useEffect(() => {
     const getNewGameId = async () => {
-      const response = await axios.post(`http://localhost:5000/game/create`)
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_ADDRESS}/game/create`
+      )
       const gameId = await response.data
 
       navigate(`/game/${gameId}/team-pick`)

@@ -10,7 +10,7 @@ interface PitchCountProps {
 export default function PitchCount({ gameId }: PitchCountProps) {
   const getStrikeCount = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/strikes`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/strikes`
     )
 
     return response.data
@@ -18,7 +18,7 @@ export default function PitchCount({ gameId }: PitchCountProps) {
 
   const getBallCount = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${gameId}/balls`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/balls`
     )
 
     return response.data

@@ -13,7 +13,7 @@ export default function LineupGenerator() {
 
   const getTeamInfo = async () => {
     const response = await axios.get(
-      `http://localhost:5000/game/${params.gameId}/teams_info`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${params.gameId}/teams_info`
     )
     const json = await response.data
 
@@ -29,7 +29,7 @@ export default function LineupGenerator() {
 
   const getRandomTeam = async (teamId: number) => {
     const response = await axios.get(
-      `http://localhost:5000/players/${teamId}/random`
+      `${import.meta.env.VITE_SERVER_ADDRESS}/players/${teamId}/random`
     )
     const json = await response.data
 
@@ -101,7 +101,7 @@ export default function LineupGenerator() {
         }}
         onClick={async () => {
           const response = await axios.post(
-            `http://localhost:5000/lineups/${params.gameId}`,
+            `${import.meta.env.VITE_SERVER_ADDRESS}/lineups/${params.gameId}`,
             {
               away: awayTeam,
               home: homeTeam,

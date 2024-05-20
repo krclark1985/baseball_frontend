@@ -5,6 +5,7 @@ import ThreeBaseball from '../components/ThreeBaseball'
 
 export default function HomePage() {
   const navigate = useNavigate()
+
   return (
     // @ts-expect-error union too complex
     <Box height="100vh" width="100vw" bgcolor="#FFFFF6">
