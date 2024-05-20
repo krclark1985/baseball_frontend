@@ -42,7 +42,6 @@ export default function TeamPicker() {
 
   if (awayTeam && homeTeam) {
     return (
-      // @ts-expect-error union type too difficult to represent
       <Box p={3}>
         <Typography variant="h6" mb={10}>
           Please confirm these are the teams you want

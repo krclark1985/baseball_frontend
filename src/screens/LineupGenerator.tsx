@@ -108,7 +108,12 @@ export default function LineupGenerator() {
             }
           )
 
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const json = await response.data // TOOD: CHeck json response
+
+          if (!json) {
+            console.log('something went wrong')
+          }
 
           navigate(`/game/${params.gameId}`)
         }}
