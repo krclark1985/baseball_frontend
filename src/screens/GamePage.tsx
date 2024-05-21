@@ -10,6 +10,7 @@ import InningBoard from './InningBoard'
 import PitchCount from './PitchCount'
 import LoadingScreen from '../components/LoadingScreen'
 import { useEffect } from 'react'
+import HomeRunModal from '../components/HomeRun/HomeRunModal'
 
 export default function GamePage() {
   const { gameId } = useParams()
@@ -183,6 +184,7 @@ export default function GamePage() {
           border="1px solid rgba(0,0,0,0.5)"
         >
           <Box>
+            {hitOutcomeQuery.data === 'Home run!!!' && <HomeRunModal />}
             <Typography fontSize={42} fontWeight={600}>
               {hitOutcomeQuery.data}
             </Typography>
