@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import axios from 'axios'
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -42,8 +43,14 @@ export default function HomePage() {
                 backgroundPosition: 'left bottom',
               },
             }}
-            onClick={() => {
-              navigate('/game-create')
+            onClick={async () => {
+              const response = await axios.post(
+                `${import.meta.env.VITE_SERVER_ADDRESS}/game/create`
+              )
+
+              if (response.data) {
+                navigate(`/game/${response.data}/team-pick`)
+              }
             }}
           >
             <Typography
