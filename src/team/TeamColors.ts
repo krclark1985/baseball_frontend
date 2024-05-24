@@ -145,7 +145,7 @@ export const TeamColors: Record<string, any> = {
     color: 'white', 
     bgColor: '#2F241D', 
     png: '/San-Diego-Padres.png',
-    abbr: 'SSDDP'
+    abbr: 'SDP'
   }, 
   ['San Francisco Giants']: {
     color: 'white', 
