@@ -5,6 +5,7 @@ import LoadingScreen from '../components/LoadingScreen'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Player } from '../types/Player'
+import PlayerCard from '../components/PlayerCard'
 
 export default function LineupGenerator() {
   const params = useParams()
@@ -67,19 +68,13 @@ export default function LineupGenerator() {
         <Box mr={15}>
           <Typography variant="h4">Away lineup</Typography>
           {awayTeam.map((player) => (
-            <div key={player.id}>
-              {' '}
-              {player.name} - {player.primary_position}{' '}
-            </div>
+            <PlayerCard key={player.id} player={player} />
           ))}
         </Box>
         <Box ml={4}>
           <Typography variant="h4">Home lineup</Typography>
           {homeTeam.map((player) => (
-            <div key={player.id}>
-              {' '}
-              {player.name} - {player.primary_position}{' '}
-            </div>
+            <PlayerCard key={player.id} player={player} />
           ))}
         </Box>
       </Box>

@@ -157,7 +157,7 @@ export const TeamColors: Record<string, any> = {
     color: 'white', 
     bgColor: '#0C2C56', 
     png: '/Seattle-Mariners.png',
-    abbr: 'SF'
+    abbr: 'SEA'
   }, 
   ['Tampa Bay Rays']: {
     color: 'white', 

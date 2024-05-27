@@ -38,8 +38,9 @@ function App() {
 
               <Route path="/game/:gameId/team-pick" element={<TeamPicker />} />
 
+              <Route path="/game-list" element={<TeamPicker />} />
               <Route
-                path="/game/:gameId/lineups/randomzie"
+                path="/game/:gameId/lineups/randomize"
                 element={<LineupGenerator />}
               />
 

@@ -124,7 +124,7 @@ export default function TeamPicker() {
               )
 
               if (response.status === 200) {
-                navigate(`/game/${params.gameId}/lineups/randomzie`)
+                navigate(`/game/${params.gameId}/lineups/randomize`)
               }
             }}
           >
