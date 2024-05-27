@@ -7,7 +7,7 @@ export const TeamColors: Record<string, any> = {
     color: 'white', 
     bgColor: '#A71930', 
     png: '/Arizona-Diamondbacks.png', 
-    abbr: 'AZD'
+    abbr: 'AZ'
   }, 
   ['Atlanta Braves']: {
     color: 'white', 
@@ -103,7 +103,7 @@ export const TeamColors: Record<string, any> = {
     color: 'white', 
     bgColor: '#002B5C', 
     png: '/Minnesota-Twins.png', 
-    abbr: 'MIL'
+    abbr: 'MIN'
   }, 
   ['New York Mets']: {
     color: 'white', 
@@ -133,7 +133,7 @@ export const TeamColors: Record<string, any> = {
     color: 'black', 
     bgColor: '#FDB827', 
     png: '/Pittsburgh-Pirates.png',
-    abbr: 'PHI'
+    abbr: 'PIT'
   }, 
   ['St. Louis Cardinals']: {
     color: 'white', 
@@ -145,7 +145,7 @@ export const TeamColors: Record<string, any> = {
     color: 'white', 
     bgColor: '#2F241D', 
     png: '/San-Diego-Padres.png',
-    abbr: 'SDP'
+    abbr: 'SD'
   }, 
   ['San Francisco Giants']: {
     color: 'white', 
@@ -157,7 +157,7 @@ export const TeamColors: Record<string, any> = {
     color: 'white', 
     bgColor: '#0C2C56', 
     png: '/Seattle-Mariners.png',
-    abbr: 'SF'
+    abbr: 'SEA'
   }, 
   ['Tampa Bay Rays']: {
     color: 'white', 
