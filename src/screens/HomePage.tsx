@@ -7,11 +7,13 @@ export default function HomePage() {
   const navigate = useNavigate()
 
   return (
-    <Box height="100vh" width="100vw" bgcolor="#FFFFF6">
-      <Box p={5}>
-        <img src="/mlb-flask-logo.jpg" style={{ width: 200 }} />
+    <Box height="100vh" width="100vw">
+      <Box p={5} position="relative">
+        <img
+          src="/mlb-flask-logo.jpg"
+          style={{ width: '50vw', position: 'absolute', right: 0, zIndex: -1 }}
+        />
 
-        <Box></Box>
         <Box>
           <Typography
             mt={4}
@@ -60,6 +62,39 @@ export default function HomePage() {
               style={{ cursor: 'pointer' }}
             >
               Start New Game
+            </Typography>
+          </Box>
+          <Box
+            width={300}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            mt={5}
+            border="1px solid rgba(0, 0, 0, .25)"
+            style={{ borderRadius: 4, cursor: 'pointer' }}
+            p={3}
+            position="relative"
+            zIndex={100}
+            sx={{
+              background: 'linear-gradient(to right, #b40c44 50%, #445E93 50%)',
+              backgroundSize: '200% 100%',
+              backgroundPosition: 'right bottom',
+              transition: 'all 0.5s ease',
+              '&:hover': {
+                backgroundPosition: 'left bottom',
+              },
+            }}
+            onClick={() => {
+              navigate(`/game/list`)
+            }}
+          >
+            <Typography
+              fontSize={18}
+              color="white"
+              fontWeight={600}
+              style={{ cursor: 'pointer' }}
+            >
+              Find Existing Game
             </Typography>
           </Box>
         </Box>

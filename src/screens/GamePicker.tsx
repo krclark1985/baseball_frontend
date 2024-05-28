@@ -55,25 +55,56 @@ export default function GamePicker() {
 
   return (
     <Box p={3}>
-      <Typography variant="h2" fontWeight={500}>
+      <Typography variant="h2" fontWeight={500} mb={4}>
         {' '}
         Find an Existing Game{' '}
       </Typography>
 
-      {existingGamesQuery.data.forEach(
+      {existingGamesQuery.data.map(
         (game: {
           id: number
           team1_name: string | null
           team2_name: string | null
         }) => {
           return (
-            <Box key={game.id} display="flex">
-              <Box>
-                <img src={TeamColors[game.team1_name as any]} />
-              </Box>
-              <Typography>VS</Typography>
-              <Box>
-                <img src={TeamColors[game.team2_name as any]} />
+            <Box key={game.id}>
+              Game ID: {game.id}
+              <Box
+                display="flex"
+                justifyContent="center"
+                mb={4}
+                maxWidth={300}
+                alignItems="center"
+                style={{ cursor: 'pointer' }}
+                sx={{
+                  transition: 'all 0.25s ease',
+                  '&:hover': {
+                    boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.20)',
+                  },
+                }}
+                borderRadius={2}
+                p={1}
+                border={'1px solid rgba(0, 0, 0, 0.2)'}
+              >
+                {game.team1_name && game.team2_name ? (
+                  <>
+                    <Box>
+                      <img
+                        style={{ maxWidth: 100 }}
+                        src={TeamColors[game.team1_name as any].png}
+                      />
+                    </Box>
+                    <Typography mx={2}>VS</Typography>
+                    <Box>
+                      <img
+                        style={{ maxWidth: 100 }}
+                        src={TeamColors[game.team2_name as any].png}
+                      />
+                    </Box>
+                  </>
+                ) : (
+                  <Typography>Choose Teams</Typography>
+                )}
               </Box>
             </Box>
           )
