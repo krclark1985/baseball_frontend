@@ -83,6 +83,15 @@ export default function GamePicker() {
                   },
                 }}
                 borderRadius={2}
+                onClick={() => {
+                  if (!game.team1_name || !game.team2_name) {
+                    navigate(`/game/${game.id}/team-pick`)
+
+                    return
+                  }
+
+                  navigate(`/game/${game.id}`)
+                }}
                 p={1}
                 border={'1px solid rgba(0, 0, 0, 0.2)'}
               >
