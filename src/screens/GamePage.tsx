@@ -19,7 +19,7 @@ export default function GamePage() {
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0]
 
-    body.style.background = `url('../../public/field-bg.jpg') no-repeat top center fixed`
+    body.style.background = `url('/field-bg.jpg') no-repeat top center fixed`
     body.style.backgroundSize = 'cover'
   }, [])
 
