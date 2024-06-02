@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 interface InningBoardProps {
   gameId: number
@@ -9,9 +10,7 @@ interface InningBoardProps {
 
 export default function InningBoard({ gameId, topOfInning }: InningBoardProps) {
   const getInning = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/inning`
-    )
+    const response = await axios.get(`${ServerAddress}/game/${gameId}/inning`)
 
     return response.data
   }

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Player } from '../types/Player'
 import PlayerCard from '../components/PlayerCard'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 export default function LineupGenerator() {
   const params = useParams()
@@ -14,7 +15,7 @@ export default function LineupGenerator() {
 
   const getTeamInfo = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${params.gameId}/teams_info`
+      `${ServerAddress}/game/${params.gameId}/teams_info`
     )
     const json = await response.data
 
@@ -30,7 +31,7 @@ export default function LineupGenerator() {
 
   const getRandomTeam = async (teamId: number) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/players/${teamId}/random`
+      `${ServerAddress}/players/${teamId}/random`
     )
     const json = await response.data
 
@@ -96,7 +97,7 @@ export default function LineupGenerator() {
         }}
         onClick={async () => {
           const response = await axios.post(
-            `${import.meta.env.VITE_SERVER_ADDRESS}/lineups/${params.gameId}`,
+            `${ServerAddress}/lineups/${params.gameId}`,
             {
               away: awayTeam,
               home: homeTeam,

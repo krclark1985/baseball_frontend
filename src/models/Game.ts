@@ -5,4 +5,10 @@ export module Game {
         team1_name: string | null 
         team2_name: string | null 
     }
+
+    export interface Winner extends IndexRecord {
+        winner: string 
+        team1_runs: number 
+        team2_runs: number
+    }
 }

@@ -6,14 +6,13 @@ import LoadingScreen from '../components/LoadingScreen'
 import { TeamColors } from '../team/TeamColors'
 import { useNavigate } from 'react-router-dom'
 import { Game } from '../models/Game'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 export default function GamePicker() {
   const navigate = useNavigate()
 
   const getGames = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game`
-    )
+    const response = await axios.get(`${ServerAddress}/game`)
 
     return response.data
   }

@@ -11,6 +11,7 @@ import PitchCount from './PitchCount'
 import LoadingScreen from '../components/LoadingScreen'
 import { useEffect } from 'react'
 import HomeRunModal from '../components/HomeRun/HomeRunModal'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 export default function GamePage() {
   const { gameId } = useParams()
@@ -29,7 +30,7 @@ export default function GamePage() {
 
   const getTeamsInfo = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/teams_info`
+      `${ServerAddress}/game/${gameId}/teams_info`
     )
 
     return response.data
@@ -37,7 +38,7 @@ export default function GamePage() {
 
   const getHitOutcome = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/hit_outcome`
+      `${ServerAddress}/game/${gameId}/hit_outcome`
     )
 
     return response.data
@@ -45,7 +46,7 @@ export default function GamePage() {
 
   const getTopOfInning = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/top_of_inning`
+      `${ServerAddress}/game/${gameId}/top_of_inning`
     )
 
     return response.data
@@ -135,11 +136,7 @@ export default function GamePage() {
               },
             }}
             onClick={() => {
-              axios.get(
-                `${
-                  import.meta.env.VITE_SERVER_ADDRESS
-                }/game/${gameId}/pitch/${1}`
-              )
+              axios.get(`${ServerAddress}/game/${gameId}/pitch/${1}`)
 
               invalidateQueries()
             }}
@@ -165,11 +162,7 @@ export default function GamePage() {
               },
             }}
             onClick={() => {
-              axios.get(
-                `${
-                  import.meta.env.VITE_SERVER_ADDRESS
-                }/game/${gameId}/pitch/${2}`
-              )
+              axios.get(`${ServerAddress}/game/${gameId}/pitch/${2}`)
 
               invalidateQueries()
             }}

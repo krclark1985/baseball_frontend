@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { TeamColors } from 'src/team/TeamColors'
 import getTeamInfo from 'src/utils/getTeamInfo'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 interface ScoreBoardProps {
   gameId: number
@@ -12,9 +13,7 @@ interface ScoreBoardProps {
 
 export default function ScoreBoard({ gameId, teamsInfo }: ScoreBoardProps) {
   const getRuns = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/runs`
-    )
+    const response = await axios.get(`${ServerAddress}/game/${gameId}/runs`)
 
     return response.data
   }

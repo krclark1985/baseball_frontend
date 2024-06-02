@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { CSSProperties } from 'react'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 interface BasesProps {
   gameId: number
@@ -9,17 +10,13 @@ interface BasesProps {
 
 export default function Bases({ gameId }: BasesProps) {
   const getOuts = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/outs`
-    )
+    const response = await axios.get(`${ServerAddress}/game/${gameId}/outs`)
 
     return response.data
   }
 
   const getRunners = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/runners`
-    )
+    const response = await axios.get(`${ServerAddress}/game/${gameId}/runners`)
 
     return response.data
   }

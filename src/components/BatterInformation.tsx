@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import getTeamInfo from 'src/utils/getTeamInfo'
 import { TeamColors } from 'src/team/TeamColors'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 interface BatterInformationProps {
   gameId: number
@@ -19,7 +20,7 @@ export default function BatterInformation({
 }: BatterInformationProps) {
   const getCurrentBatter = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/current_batter`
+      `${ServerAddress}/game/${gameId}/current_batter`
     )
 
     return response.data

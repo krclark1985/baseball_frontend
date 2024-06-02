@@ -8,7 +8,7 @@ import HomePage from 'src/screens/HomePage'
 import { ThemeProvider } from '@mui/material/styles'
 import createTheme from '@mui/material/styles/createTheme'
 import GamePicker from 'src/screens/GamePicker'
-import FinalScoreScreen from 'src/screens/FinalScoreScreen'
+import FinalScorePage from 'src/screens/FinalScorePage'
 
 const queryClient = new QueryClient()
 
@@ -40,7 +40,7 @@ function App() {
 
               <Route
                 path="/game/final-score/:gameId"
-                element={<FinalScoreScreen />}
+                element={<FinalScorePage />}
               />
               <Route path="/game/list" element={<GamePicker />} />
               <Route path="/game/:gameId/team-pick" element={<TeamPicker />} />

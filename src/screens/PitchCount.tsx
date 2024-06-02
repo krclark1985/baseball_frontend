@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 interface PitchCountProps {
   gameId: number
@@ -9,17 +10,13 @@ interface PitchCountProps {
 
 export default function PitchCount({ gameId }: PitchCountProps) {
   const getStrikeCount = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/strikes`
-    )
+    const response = await axios.get(`${ServerAddress}/game/${gameId}/strikes`)
 
     return response.data
   }
 
   const getBallCount = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/game/${gameId}/balls`
-    )
+    const response = await axios.get(`${ServerAddress}/game/${gameId}/balls`)
 
     return response.data
   }

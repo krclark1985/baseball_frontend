@@ -7,6 +7,7 @@ import LoadingScreen from '../components/LoadingScreen'
 import { useState } from 'react'
 import { TeamColors } from '../team/TeamColors'
 import Grid from '@mui/material/Grid'
+import { ServerAddress } from 'src/constants/ServerAddress'
 
 interface Team {
   id: number
@@ -21,9 +22,7 @@ export default function TeamPicker() {
   const [homeTeam, setHomeTeam] = useState<Team | null>(null)
 
   const getTeams = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_ADDRESS}/teams`
-    )
+    const response = await axios.get(`${ServerAddress}/teams`)
     const json = await response.data
 
     return json
@@ -112,9 +111,7 @@ export default function TeamPicker() {
             }}
             onClick={async () => {
               const response = await axios.put(
-                `${import.meta.env.VITE_SERVER_ADDRESS}/game/${
-                  params.gameId
-                }/team_info`,
+                `${ServerAddress}/game/${params.gameId}/team_info`,
                 {
                   team1_id: awayTeam.id,
                   team1_name: awayTeam.name,
