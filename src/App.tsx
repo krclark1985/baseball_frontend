@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import GamePage from './screens/GamePage'
-import TeamPicker from './screens/TeamPicker'
-import LineupGenerator from './screens/LineupGenerator'
-import HomePage from './screens/HomePage'
+import GamePage from 'src/screens/GamePage'
+import TeamPicker from 'src/screens/TeamPicker'
+import LineupGenerator from 'src/screens/LineupGenerator'
+import HomePage from 'src/screens/HomePage'
 import { ThemeProvider } from '@mui/material/styles'
 import createTheme from '@mui/material/styles/createTheme'
-import GamePicker from './screens/GamePicker'
+import GamePicker from 'src/screens/GamePicker'
+import FinalScoreScreen from 'src/screens/FinalScoreScreen'
 
 const queryClient = new QueryClient()
 
@@ -37,6 +38,10 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
 
+              <Route
+                path="/game/final-score/:gameId"
+                element={<FinalScoreScreen />}
+              />
               <Route path="/game/list" element={<GamePicker />} />
               <Route path="/game/:gameId/team-pick" element={<TeamPicker />} />
 

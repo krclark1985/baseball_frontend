@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { Player } from '../types/Player'
+import { Player } from 'src/types/Player'
 import { useRef, useState } from 'react'
 import Popover from '@mui/material/Popover'
 

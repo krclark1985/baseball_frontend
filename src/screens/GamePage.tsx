@@ -21,6 +21,10 @@ export default function GamePage() {
 
     body.style.background = `url('/field-bg.jpg') no-repeat top center fixed`
     body.style.backgroundSize = 'cover'
+
+    return () => {
+      body.style.background = ''
+    }
   }, [])
 
   const getTeamsInfo = async () => {

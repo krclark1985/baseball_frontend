@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { Player } from '../types/Player'
+import { Player } from 'src/types/Player'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import getTeamInfo from '../utils/getTeamInfo'
-import { TeamColors } from '../team/TeamColors'
+import getTeamInfo from 'src/utils/getTeamInfo'
+import { TeamColors } from 'src/team/TeamColors'
 
 interface BatterInformationProps {
   gameId: number

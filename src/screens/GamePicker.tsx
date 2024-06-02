@@ -7,8 +7,6 @@ import { TeamColors } from '../team/TeamColors'
 import { useNavigate } from 'react-router-dom'
 import { Game } from '../models/Game'
 
-
-
 export default function GamePicker() {
   const navigate = useNavigate()
 
@@ -39,7 +37,6 @@ export default function GamePicker() {
       inactiveGames.push(game)
     }
   })
-
 
   if (existingGamesQuery.error || !existingGamesQuery.data.length) {
     return (
@@ -75,61 +72,59 @@ export default function GamePicker() {
         Find an Active Game{' '}
       </Typography>
 
-      {activeGames.map(
-        (game) => {
-          return (
-            <Box key={game.id}>
-              Game ID: {game.id}
-              <Box
-                display="flex"
-                justifyContent="center"
-                mb={4}
-                maxWidth={300}
-                alignItems="center"
-                style={{ cursor: 'pointer' }}
-                sx={{
-                  transition: 'all 0.25s ease',
-                  '&:hover': {
-                    boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.20)',
-                  },
-                }}
-                borderRadius={2}
-                onClick={() => {
-                  if (!game.team1_name || !game.team2_name) {
-                    navigate(`/game/${game.id}/team-pick`)
+      {activeGames.map((game) => {
+        return (
+          <Box key={game.id}>
+            Game ID: {game.id}
+            <Box
+              display="flex"
+              justifyContent="center"
+              mb={4}
+              maxWidth={300}
+              alignItems="center"
+              style={{ cursor: 'pointer' }}
+              sx={{
+                transition: 'all 0.25s ease',
+                '&:hover': {
+                  boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.20)',
+                },
+              }}
+              borderRadius={2}
+              onClick={() => {
+                if (!game.team1_name || !game.team2_name) {
+                  navigate(`/game/${game.id}/team-pick`)
 
-                    return
-                  }
+                  return
+                }
 
-                  navigate(`/game/${game.id}`)
-                }}
-                p={1}
-                border={'1px solid rgba(0, 0, 0, 0.2)'}
-              >
-                {game.team1_name && game.team2_name ? (
-                  <>
-                    <Box>
-                      <img
-                        style={{ maxWidth: 100 }}
-                        src={TeamColors[game.team1_name as any].png}
-                      />
-                    </Box>
-                    <Typography mx={2}>VS</Typography>
-                    <Box>
-                      <img
-                        style={{ maxWidth: 100 }}
-                        src={TeamColors[game.team2_name as any].png}
-                      />
-                    </Box>
-                  </>
-                ) : (
-                  <Typography>Choose Teams</Typography>
-                )}
-              </Box>
+                navigate(`/game/${game.id}`)
+              }}
+              p={1}
+              border={'1px solid rgba(0, 0, 0, 0.2)'}
+            >
+              {game.team1_name && game.team2_name ? (
+                <>
+                  <Box>
+                    <img
+                      style={{ maxWidth: 100 }}
+                      src={TeamColors[game.team1_name as any].png}
+                    />
+                  </Box>
+                  <Typography mx={2}>VS</Typography>
+                  <Box>
+                    <img
+                      style={{ maxWidth: 100 }}
+                      src={TeamColors[game.team2_name as any].png}
+                    />
+                  </Box>
+                </>
+              ) : (
+                <Typography>Choose Teams</Typography>
+              )}
             </Box>
-          )
-        }
-      )}
+          </Box>
+        )
+      })}
 
       {inactiveGames.length && (
         <Box mt={3}>
@@ -139,40 +134,45 @@ export default function GamePicker() {
 
           {inactiveGames.map((game) => {
             return (
-              <Box key={game.id}>
-              Game ID: {game.id}
               <Box
-                display="flex"
-                justifyContent="center"
-                mb={4}
-                maxWidth={300}
-                alignItems="center"
-                style={{ cursor: 'pointer' }}
-                sx={{
-                  transition: 'all 0.25s ease',
-                  '&:hover': {
-                    boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.20)',
-                  },
+                key={game.id}
+                onClick={() => {
+                  navigate(`/game/final-score/${game.id}`)
                 }}
-                borderRadius={2}
-                p={1}
-                border={'1px solid rgba(0, 0, 0, 0.2)'}
               >
-                <Box>
-                  <img
-                    style={{ maxWidth: 100 }}
-                    src={TeamColors[game.team1_name as any].png}
-                  />
-                </Box>
-                <Typography mx={2}>VS</Typography>
-                <Box>
-                  <img
-                    style={{ maxWidth: 100 }}
-                    src={TeamColors[game.team2_name as any].png}
-                  />
+                Game ID: {game.id}
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  mb={4}
+                  maxWidth={300}
+                  alignItems="center"
+                  style={{ cursor: 'pointer' }}
+                  sx={{
+                    transition: 'all 0.25s ease',
+                    '&:hover': {
+                      boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.20)',
+                    },
+                  }}
+                  borderRadius={2}
+                  p={1}
+                  border={'1px solid rgba(0, 0, 0, 0.2)'}
+                >
+                  <Box>
+                    <img
+                      style={{ maxWidth: 100 }}
+                      src={TeamColors[game.team1_name as any].png}
+                    />
+                  </Box>
+                  <Typography mx={2}>VS</Typography>
+                  <Box>
+                    <img
+                      style={{ maxWidth: 100 }}
+                      src={TeamColors[game.team2_name as any].png}
+                    />
+                  </Box>
                 </Box>
               </Box>
-            </Box>
             )
           })}
         </Box>

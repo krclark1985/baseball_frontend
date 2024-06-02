@@ -2,8 +2,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { TeamColors } from '../team/TeamColors'
-import getTeamInfo from '../utils/getTeamInfo'
+import { TeamColors } from 'src/team/TeamColors'
+import getTeamInfo from 'src/utils/getTeamInfo'
 
 interface ScoreBoardProps {
   gameId: number
