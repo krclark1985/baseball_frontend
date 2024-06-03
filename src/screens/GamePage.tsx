@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import ScoreBoard from '../components/ScoreBoard'
@@ -16,6 +16,7 @@ import { ServerAddress } from 'src/constants/ServerAddress'
 export default function GamePage() {
   const { gameId } = useParams()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0]
@@ -52,6 +53,21 @@ export default function GamePage() {
     return response.data
   }
 
+  const getIsGameActive = async () => {
+    const response = await axios.get(
+      `${ServerAddress}/game/${gameId}/is_active`
+    )
+
+    return response.data
+  }
+
+  const getGameActiveQuery = useQuery({
+    queryKey: ['gameInfo'],
+    queryFn: getIsGameActive,
+    retry: 1,
+    refetchOnWindowFocus: false,
+  })
+
   const teamsInfoQuery = useQuery({
     queryKey: ['teamInfo'],
     queryFn: getTeamsInfo,
@@ -83,11 +99,18 @@ export default function GamePage() {
       queryClient.invalidateQueries({ queryKey: ['inning'] })
       queryClient.invalidateQueries({ queryKey: ['top_of_inning'] })
       queryClient.invalidateQueries({ queryKey: ['outs'] })
+      queryClient.invalidateQueries({ queryKey: ['gameInfo'] })
     }, 500)
   }
 
   if (!teamsInfoQuery.data) {
     return <LoadingScreen />
+  }
+
+  if (getGameActiveQuery.data && getGameActiveQuery.data.active === false) {
+    navigate(`/game/final-score/${gameId}`)
+
+    return
   }
 
   return (

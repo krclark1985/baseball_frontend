@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import createTheme from '@mui/material/styles/createTheme'
 import GamePicker from 'src/screens/GamePicker'
 import FinalScorePage from 'src/screens/FinalScorePage'
+import NotFoundPage from './screens/NotFoundPage'
 
 const queryClient = new QueryClient()
 
@@ -52,6 +53,7 @@ function App() {
               />
 
               <Route path="/game/:gameId" element={<GamePage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Router>
         </ThemeProvider>

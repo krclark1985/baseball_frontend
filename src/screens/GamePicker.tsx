@@ -7,6 +7,7 @@ import { TeamColors } from '../team/TeamColors'
 import { useNavigate } from 'react-router-dom'
 import { Game } from '../models/Game'
 import { ServerAddress } from 'src/constants/ServerAddress'
+import MainButton from 'src/components/MainButton'
 
 export default function GamePicker() {
   const navigate = useNavigate()
@@ -66,6 +67,15 @@ export default function GamePicker() {
 
   return (
     <Box p={3}>
+      <MainButton
+        onClick={() => {
+          navigate(`/`)
+        }}
+        boxProps={{ mb: 2 }}
+      >
+        <span>Return Home</span>
+      </MainButton>
+
       <Typography variant="h2" fontWeight={500} mb={4}>
         {' '}
         Find an Active Game{' '}

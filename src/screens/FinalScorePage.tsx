@@ -5,6 +5,7 @@ import axios from 'axios'
 import ConfettiExplosion from 'react-confetti-explosion'
 import { useNavigate, useParams } from 'react-router-dom'
 import LoadingScreen from 'src/components/LoadingScreen'
+import MainButton from 'src/components/MainButton'
 import { ServerAddress } from 'src/constants/ServerAddress'
 import { Game } from 'src/models/Game'
 import { TeamColors } from 'src/team/TeamColors'
@@ -24,7 +25,7 @@ export default function FinalScorePage() {
   const gameInfoQuery = useQuery({
     queryKey: ['game'],
     queryFn: getGameOutcome,
-    refetchOnWindowFocus: false,
+    refetchOnMount: true,
   })
 
   if (!gameInfoQuery.data) {
@@ -75,28 +76,14 @@ export default function FinalScorePage() {
         </Box>
       </Box>
 
-      <Box
-        style={{ cursor: 'pointer' }}
-        maxWidth={200}
-        p={2}
-        mt={10}
-        borderRadius={2}
-        border="1px solid rgba(0, 0, 0, 0.25)"
-        textAlign="center"
-        sx={{
-          transition: 'all 0.25s ease',
-          '&:hover': {
-            backgroundColor: 'green',
-            color: 'white',
-            boxShadow: '10px 5px 5px rgba(0, 0, 0, 0.25)',
-          },
-        }}
+      <MainButton
+        boxProps={{ mt: 2 }}
         onClick={() => {
           navigate(`/`)
         }}
       >
         <span>Return Home</span>
-      </Box>
+      </MainButton>
     </Box>
   )
 }
